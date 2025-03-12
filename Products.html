@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products - My Cafe</title>
+<style>
+/* FUTURE ME YOU'RE WELCOME  */
+
+/* GENERAL  */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY */
+body {
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+  background: linear-gradient(135deg, #fffccf, #feb94e);
+  color: #5a3e36; 
+   }
+        blockquote {
+            font-style: italic;
+            color: #808080  ; 
+            margin: 20px 0;
+            padding-left: 15px;
+            border-left: 4px solid #3498db;
+}
+
+
+/* NAVIGATION */
+nav {
+  background: rgba(90, 62, 54, 0.9); 
+  color: #fff;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; 
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+nav ul li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px); 
+}
+
+/* HEADER */
+header {
+  background: rgba(244, 244, 244, 0.8); 
+  padding: 40px;
+  text-align: center;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-size: 3rem; 
+  color: #5a3e36; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out; 
+}
+
+header p {
+  font-size: 1.5rem; 
+  color: #7a5a48; 
+  animation: fadeIn 1.5s ease-in-out; 
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+
+
+/* PRODUCTS */
+.products {
+  display: flex;
+  justify-content: space-around; 
+  flex-wrap: wrap; 
+  gap: 20px; 
+  padding: 20px;
+}
+
+.product {
+  background: #fff8e1; 
+  border: 1px solid #8b7355; 
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  width: 23%; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product:hover {
+  transform: scale(1.05); 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+}
+
+.product img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.product img:hover {
+  transform: scale(1.1); 
+}
+
+.product h3 {
+  font-size: 1.5rem;
+  color: #5a4a42; 
+  margin: 10px 0;
+}
+
+.product p {
+  font-size: 1rem;
+  color: #5a4a42; 
+  line-height: 1.5;
+}
+
+.product .price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #8b7355; 
+  margin-top: 10px;
+}
+
+
+/* MODALS */
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 1000;
+  padding-top: 60px; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.9); 
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 80%;
+  max-height: 80%;
+  border-radius: 10px;
+  animation: zoomIn 0.3s ease-in-out; 
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* GALLERY */
+.gallery {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.gallery a {
+  display: block;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery a:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.gallery img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+
+/* POPUP IS STILL UNDER GALLERY*/
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.popup-overlay.active {
+  display: flex;
+}
+
+.popup-image {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* POPUP CLOSE STILL UNDER GALLERY AAHHH*/
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #feb94e;
+}
+
+
+
+
+/* TESTIMONIALS */
+section {
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.9); 
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+section h2 {
+  font-size: 2.5rem; 
+  margin-bottom: 20px;
+  color: #5a3e36; 
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+section ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+section ul li {
+  font-size: 1.2rem;
+  color: #7a5a48; 
+  margin-bottom: 10px;
+  padding: 10px;
+  background: rgba(244, 244, 244, 0.8); 
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+section ul li:hover {
+  transform: translateX(10px);
+}
+
+/* TABLE STYLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  background: rgba(244, 244, 244, 0.8); 
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+table th {
+  background: rgba(90, 62, 54, 0.9); 
+  color: #fff;
+  font-weight: bold;
+}
+
+table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.9); 
+}
+
+table tr:hover {
+  background: rgba(255, 248, 225, 0.9); 
+}
+
+table td {
+  color: #5a3e36; 
+}
+
+table td:last-child {
+  font-style: italic; 
+}
+
+
+
+
+/* CONTACT */
+form {
+  margin: 20px;
+  background: rgba(244, 244, 244, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #5a3e36; 
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+form input:focus, form textarea:focus {
+  border-color: #333;
+  outline: none;
+}
+
+form input[type="submit"], form input[type="reset"] {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+form input[type="submit"]:hover, form input[type="reset"]:hover {
+  background: #555;
+  transform: translateY(-2px); 
+}
+
+/* FOOTER */
+footer {
+  background: rgba(90, 62, 54, 0.9); 
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+  margin: 0;
+  font-size: 1rem; 
+}</style>
+
+</head>
+<body>
+  <!-- NAVIGATION -->
+  <nav>
+    <ul>
+      <li><a href="file:///C:/Users/YraGeinna/Downloads/About%20us.html">About Us</a></li>
+      <li><a href="file:///C:/Users/YraGeinna/Downloads/Products.html">Products</a></li>
+      <li><a href="file:///C:/Users/YraGeinna/Downloads/Gallery.html">Gallery</a></li>
+      <li><a href="file:///C:/Users/YraGeinna/Downloads/Testimonials.html">Testimonials</a></li>
+      <li><a href="file:///C:/Users/YraGeinna/Downloads/Contact.html">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- PRODUCTS -->
+  <header>
+    <h1>MENU</h1>
+	  <p>Our pastries and baked goods are made fresh daily, offering the perfect treat to pair with your favorite coffee. </p>
+	   <p><blockquote>Click on the Images to take a closer look!</blockquote></p>
+
+  </header>
+  
+ 
+  
+  <section class="products">
+  
+
+    <div class="product">
+      <img src="https://www.thecookierookie.com/wp-content/uploads/2023/05/bulletproof-coffee-featured.jpg" alt="Coffee" class="popup-image">
+      <h3>Classic Coffee</h3>
+
+      <p>Rich and aromatic coffee made from freshly ground beans.</p>
+      <p class="price">P100</p>
+
+    </div>
+
+    <div class="product">
+      <img src="https://cdn.britannica.com/65/235965-050-A5D740E2/Croissants-jar-of-jam.jpg" alt="Croissant"class="popup-image">
+      <h3>Buttery Croissant</h3>
+      <p>Flaky and buttery croissant, perfect with your coffee.</p>
+      <p class="price">P95</p>
+    </div>
+
+    <div class="product">
+      <img src="https://sugargeekshow.com/wp-content/uploads/2023/10/easy_chocolate_cake_slice-500x375.jpg" alt="Cake"class="popup-image">
+      <h3>Chocolate Cake</h3>
+	  
+	  
+      <p>Decadent chocolate cake with a rich, creamy frosting.</p>
+      <p class="price">P150</p>
+    </div>
+
+    <div class="product">
+      <img src="https://www.tomatoblues.com/wp-content/uploads/2022/08/vegan-masala-chai-3.jpg" alt="Tea"class="popup-image">
+      <h3>Herbal Tea</h3>
+      <p>Relaxing herbal tea made from natural ingredients.</p>
+      <p class="price">P90</p>
+    </div>
+	
+	 <div class="product">
+      <img src="https://www.lavenderandmacarons.com/wp-content/uploads/2022/12/french-chocolate-eclairs-recipe.jpg" alt="eclair"class="popup-image">
+      <h3>Chocolate Eclair </h3>
+      <p>A light choux pastry filled with rich vanilla custard and topped with glossy chocolate ganache.</p>
+      <p class="price">P140</p>
+    </div>
+	
+	
+	 <div class="product">
+      <img src="https://emilylaurae.com/wp-content/uploads/2022/10/Caramel-macchiato-4.jpg" alt="Caramel Macchiato"class="popup-image">
+      <h3>Caramel Macchiato</h3>
+      <p>Sweet caramel drizzled over a creamy espresso delight.</p>
+      <p class="price">P120</p>
+    </div>
+	
+	 <div class="product">
+      <img src="https://shottbeverages.com/wp-content/uploads/2019/05/Peppermint-Matcha-Latte-962x641.jpg" alt="Matcha Latte "class="popup-image">
+      <h3>Matcha Latte</h3>
+      <p>Earthy matcha green tea mixed with steamed milk.</p>
+      <p class="price">P100</p>
+    </div>
+	
+	
+ <div class="product">
+      <img src="https://www.marcellinaincucina.com/wp-content/uploads/2022/07/raspberry-danish-featured.jpg" alt="Raspberry Danish"class="popup-image">
+      <h3>Raspberry Danish</h3>
+      <p>A golden, flaky pastry filled with tart raspberry jam and drizzled with icing.</p>
+      <p class="price">P190</p>
+    </div>
+
+
+ <div class="product">
+      <img src="https://prod-app.breville.com/thumbnail/recipe/1723438435/Iced+Brown+Sugar+Oatmilk+Latte-Milky+Coffee+Pouring_1080x1440.jpg" alt="Brown Sugar Oat Latte"class="popup-image">
+      <h3>Brown Sugar Oat Latte</h3>
+      <p> A Smooth espresso mixed with oat milk and brown sugar</p>
+      <p class="price">P98</p>
+    </div>
+
+
+ <div class="product">
+      <img src="https://cambreabakes.com/wp-content/uploads/2024/03/best-cinnamon-rolls-featured.jpg" alt="Cinnamon Roll "class="popup-image">
+      <h3>Cinnamon Roll</h3>
+      <p>Soft, swirled dough layered with cinnamon sugar and topped with creamy frosting</p>
+      <p class="price">P130</p>
+    </div>
+</section>
+<section>
+ <h2>Customer Favorites:</h2>
+        <ul>
+            <li>Caramel Macchiato</li>
+            <li>Cinnamon Roll</li>
+            <li>Matcha Latte</li>
+        </ul>
+		<br>
+		<h2>Possible Allergens:</h2>
+        <ul>
+            <li>Milk</li>
+            <li>Nuts</li>
+            <li>Soy</li>
+        </ul>
+	</section>
+  <!-- MODAL -->
+  <div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01">
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Morning Glow Cafe. All rights reserved.</p>
+  </footer>
+
+
+  <!-- THIS IS THE JAVASCRIPT PORTIONNN -->
+
+  <script>
+    var modal = document.getElementById("myModal");
+
+    var img = document.querySelectorAll('.popup-image');
+    var modalImg = document.getElementById("img01");
+
+    img.forEach(function(image) {
+      image.onclick = function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+      }
+    });
+
+    var span = document.getElementsByClassName("close")[0];
+
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
